@@ -3,7 +3,7 @@ import type { UserInterface } from "../user";
 export interface RegisterHttpParams {
 	name: string;
 	email: string;
-	avatarUrl: string;
+	avatarUrl?: string;
 	phone: string;
 	password: string;
 }
