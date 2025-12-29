@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRegisterMutation } from "@shared/queries/auth/use-register.mutation";
+import { useUserStore } from "@shared/store/user-store";
 import { useForm } from "react-hook-form";
-import { useRegisterMutation } from "../../shared/queries/auth/use-register.mutation";
-import { useUserStore } from "../../shared/store/user-store";
 import { type RegisterFormData, registerScheme } from "./register.scheme";
 
 export const useRegisterViewModel = () => {

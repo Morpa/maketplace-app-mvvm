@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import type { UserInterface } from "@shared/interfaces/user";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { UserInterface } from "../interfaces/user";
 
 interface SetSessionParams {
 	user: UserInterface;

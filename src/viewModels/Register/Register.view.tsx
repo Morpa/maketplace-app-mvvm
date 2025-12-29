@@ -1,11 +1,10 @@
+import { AppInputController } from "@shared/components/AppInputController";
+import { AuthFormHeader } from "@shared/components/AuthFormHeader";
+import { KeyboardContainer } from "@shared/components/KeyboardContainer";
 import { router } from "expo-router";
 import type { FC } from "react";
 import { ScrollView, Text, TouchableOpacity } from "react-native";
-import { AppInputController } from "../../shared/components/AppInputController";
-import { AuthFormHeader } from "../../shared/components/AuthFormHeader";
-import { KeyboardContainer } from "../../shared/components/KeyboardContainer";
 import type { useRegisterViewModel } from "./userRegister.viewModel";
-
 export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
 	onSubmit,
 	control,
@@ -22,13 +21,7 @@ export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
 					label="NOME"
 					control={control}
 					name="name"
-				/>
-
-				<AppInputController
-					leftIcon="mail-outline"
-					label="E-MAIL"
-					control={control}
-					name="email"
+					placeholder="Seu nome completo"
 				/>
 
 				<AppInputController
@@ -36,6 +29,17 @@ export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
 					label="TELEFONE"
 					control={control}
 					name="phone"
+					placeholder="(00) 00000-0000"
+				/>
+
+				<Text className="text-base mt-6 font-bold text-gray-500">Acesso</Text>
+
+				<AppInputController
+					leftIcon="mail-outline"
+					label="E-MAIL"
+					control={control}
+					name="email"
+					placeholder="mail@example.com"
 				/>
 
 				<AppInputController
@@ -44,6 +48,7 @@ export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
 					control={control}
 					name="password"
 					secureTextEntry
+					placeholder="Sua senha"
 				/>
 
 				<AppInputController
@@ -52,6 +57,7 @@ export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
 					control={control}
 					name="confirmPassword"
 					secureTextEntry
+					placeholder="Confirme sua senha"
 				/>
 
 				<TouchableOpacity onPress={onSubmit}>
