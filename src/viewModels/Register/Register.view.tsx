@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import type { userRegisterViewModel } from "./userRegister.viewModel";
+import type { useRegisterViewModel } from "./userRegister.viewModel";
 
-export const RegisterView: FC<ReturnType<typeof userRegisterViewModel>> = ({
+export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
 	onSubmit,
 }) => {
 	return (

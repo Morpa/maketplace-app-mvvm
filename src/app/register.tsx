@@ -1,8 +1,8 @@
 import { RegisterView } from "../viewModels/Register/Register.view";
-import { userRegisterViewModel } from "../viewModels/Register/userRegister.viewModel";
+import { useRegisterViewModel } from "../viewModels/Register/userRegister.viewModel";
 
 export default function Register() {
-	const props = userRegisterViewModel();
+	const props = useRegisterViewModel();
 
 	return <RegisterView {...props} />;
 }

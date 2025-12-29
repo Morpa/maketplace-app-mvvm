@@ -1,10 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { userRegisterMutation } from "../../shared/queries/auth/user-register.mutation";
+import { useRegisterMutation } from "../../shared/queries/auth/use-register.mutation";
+import { useUserStore } from "../../shared/store/user-store";
 import { type RegisterFormData, registerScheme } from "./register.scheme";
 
-export const userRegisterViewModel = () => {
-	const mutation = userRegisterMutation();
+export const useRegisterViewModel = () => {
+	const userRegisterMutation = useRegisterMutation();
+	const { setSession, user } = useUserStore();
 
 	const {
 		control,
@@ -13,19 +15,30 @@ export const userRegisterViewModel = () => {
 	} = useForm<RegisterFormData>({
 		resolver: yupResolver(registerScheme),
 		defaultValues: {
-			name: "Zeca",
-			email: "zeca@email.com",
-			password: "123456",
-			confirmPassword: "123456",
-			phone: "123321",
+			name: "MONA",
+			email: "teste1klm@gmail.com",
+			password: "123123123",
+			confirmPassword: "123123123",
+			phone: "11111111111",
 		},
 	});
 
 	const onSubmit = handleSubmit(async (userData) => {
-		// biome-ignore lint/correctness/noUnusedVariables: BE don't care about confirmPassword
+		console.log(userData);
+		// biome-ignore lint/correctness/noUnusedVariables: <BE don't care abaout the confirmPassword>
 		const { confirmPassword, ...registerData } = userData;
-		await mutation.mutateAsync(registerData);
+
+		const mutationResponse =
+			await userRegisterMutation.mutateAsync(registerData);
+
+		setSession({
+			refreshToken: mutationResponse.refreshToken,
+			token: mutationResponse.token,
+			user: mutationResponse.user,
+		});
 	});
+
+	console.log({ user });
 
 	return {
 		control,
