@@ -3,7 +3,8 @@ import { AuthFormHeader } from "@shared/components/AuthFormHeader";
 import { KeyboardContainer } from "@shared/components/KeyboardContainer";
 import { router } from "expo-router";
 import type { FC } from "react";
-import { ScrollView, Text, TouchableOpacity } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { AppButton } from "@/shared/components/AppButton";
 import type { useRegisterViewModel } from "./userRegister.viewModel";
 export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
 	onSubmit,
@@ -60,13 +61,18 @@ export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
 					placeholder="Confirme sua senha"
 				/>
 
-				<TouchableOpacity onPress={onSubmit}>
-					<Text>Registrar</Text>
-				</TouchableOpacity>
+				<AppButton className="mt-6" onPress={onSubmit}>
+					Registrar
+				</AppButton>
 
-				<TouchableOpacity onPress={() => router.push("/login")}>
-					<Text>Login</Text>
-				</TouchableOpacity>
+				<View className="mt-16">
+					<Text className="text-base text-gray-300 mb-6">
+						Já tem uma conta?
+					</Text>
+					<AppButton variant="outlined" onPress={() => router.push("/login")}>
+						Login
+					</AppButton>
+				</View>
 			</ScrollView>
 		</KeyboardContainer>
 	);
