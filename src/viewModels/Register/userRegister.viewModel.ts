@@ -1,72 +1,61 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useRegisterMutation } from "@shared/queries/auth/use-register.mutation";
-import { useUserStore } from "@shared/store/user-store";
-import { useForm } from "react-hook-form";
-import { useAppModal } from "@/shared/hooks/useAppModal";
-import { type RegisterFormData, registerScheme } from "./register.scheme";
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useRegisterMutation } from "@shared/queries/auth/use-register.mutation"
+import { useUserStore } from "@shared/store/user-store"
+import { CameraType } from "expo-image-picker"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { useImage } from "@/shared/hooks/useImage"
+import { type RegisterFormData, registerScheme } from "./register.scheme"
 
 export const useRegisterViewModel = () => {
-	const userRegisterMutation = useRegisterMutation();
-	const { setSession, user } = useUserStore();
-	const modals = useAppModal();
+  const userRegisterMutation = useRegisterMutation()
+  const { setSession } = useUserStore()
+  const [avatarUri, setAvatarUri] = useState<string | null>(null)
 
-	const handleSelectAvatar = () => {
-		modals.showSelection({
-			title: "Selecionar foto",
-			message: "Escolha uma opção:",
-			options: [
-				{
-					text: "Galeria",
-					icon: "images",
-					variant: "primary",
-					onPress: () => alert("galeria"),
-				},
-				{
-					text: "Câmera",
-					icon: "camera",
-					variant: "primary",
-					onPress: () => alert("Camera"),
-				},
-			],
-		});
-	};
+  const { handleSelectImage } = useImage({
+    callback: setAvatarUri,
+    cameraType: CameraType.front,
+  })
 
-	const {
-		control,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<RegisterFormData>({
-		resolver: yupResolver(registerScheme),
-		defaultValues: {
-			name: "",
-			email: "",
-			password: "",
-			confirmPassword: "",
-			phone: "",
-		},
-	});
+  const handleSelectAvatar = () => {
+    handleSelectImage()
+  }
 
-	const onSubmit = handleSubmit(async (userData) => {
-		console.log(userData);
-		// biome-ignore lint/correctness/noUnusedVariables: <BE don't care abaout the confirmPassword>
-		const { confirmPassword, ...registerData } = userData;
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>({
+    resolver: yupResolver(registerScheme),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      phone: "",
+    },
+  })
 
-		const mutationResponse =
-			await userRegisterMutation.mutateAsync(registerData);
+  const onSubmit = handleSubmit(async (userData) => {
+    console.log(userData)
+    // biome-ignore lint/correctness/noUnusedVariables: <BE don't care abaout the confirmPassword>
+    const { confirmPassword, ...registerData } = userData
 
-		setSession({
-			refreshToken: mutationResponse.refreshToken,
-			token: mutationResponse.token,
-			user: mutationResponse.user,
-		});
-	});
+    const mutationResponse =
+      await userRegisterMutation.mutateAsync(registerData)
 
-	console.log({ user });
+    setSession({
+      refreshToken: mutationResponse.refreshToken,
+      token: mutationResponse.token,
+      user: mutationResponse.user,
+    })
+  })
 
-	return {
-		control,
-		errors,
-		onSubmit,
-		handleSelectAvatar,
-	};
-};
+  return {
+    control,
+    errors,
+    onSubmit,
+    handleSelectAvatar,
+    avatarUri,
+  }
+}

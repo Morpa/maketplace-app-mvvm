@@ -1,7 +1,7 @@
-import type { UserInterface } from "@shared/interfaces/user";
+import type { UserInterface } from "@shared/interfaces/user"
 
 export interface AuthResponse {
-	user: UserInterface;
-	token: string;
-	refreshToken: string;
+  user: UserInterface
+  token: string
+  refreshToken: string
 }

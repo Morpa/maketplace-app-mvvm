@@ -1,28 +1,28 @@
-import axios, { type AxiosInstance } from "axios";
-import { Platform } from "react-native";
+import axios, { type AxiosInstance } from "axios"
+import { Platform } from "react-native"
 
 const getBaseUrl = () => {
-	return Platform.select({
-		ios: "http://localhost:3001",
-		android: "http://10.0.2.2:3001",
-	});
-};
-
-const baseURL = getBaseUrl();
-
-export class MarketplaceApiClient {
-	private instance: AxiosInstance;
-	private isRefreshing = false;
-
-	constructor() {
-		this.instance = axios.create({
-			baseURL,
-		});
-	}
-
-	getInstance() {
-		return this.instance;
-	}
+  return Platform.select({
+    ios: "http://localhost:3001",
+    android: "http://10.0.2.2:3001",
+  })
 }
 
-export const marketplaceApiClient = new MarketplaceApiClient().getInstance();
+const baseURL = getBaseUrl()
+
+export class MarketplaceApiClient {
+  private instance: AxiosInstance
+  private isRefreshing = false
+
+  constructor() {
+    this.instance = axios.create({
+      baseURL,
+    })
+  }
+
+  getInstance() {
+    return this.instance
+  }
+}
+
+export const marketplaceApiClient = new MarketplaceApiClient().getInstance()
