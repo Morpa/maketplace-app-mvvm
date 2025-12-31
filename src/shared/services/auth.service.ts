@@ -1,11 +1,11 @@
-import { baseURL, marketplaceApiClient } from "@shared/api/marketplace"
+import { baseURL, marketPlaceApiClient } from "@shared/api/marketplace"
 import type { AuthResponse } from "@shared/interfaces/http/auth-response"
 import type { LoginHttpParams } from "@shared/interfaces/http/login"
 import type { RegisterHttpParams } from "@shared/interfaces/http/register"
 import type { UploadAvatarResponse } from "@/shared/interfaces/http/upload-avatar"
 
 export const register = async (userData: RegisterHttpParams) => {
-  const { data } = await marketplaceApiClient.post<AuthResponse>(
+  const { data } = await marketPlaceApiClient.post<AuthResponse>(
     "/auth/register",
     userData,
   )
@@ -14,7 +14,7 @@ export const register = async (userData: RegisterHttpParams) => {
 }
 
 export const login = async (userData: LoginHttpParams) => {
-  const { data } = await marketplaceApiClient.post<AuthResponse>(
+  const { data } = await marketPlaceApiClient.post<AuthResponse>(
     "/auth/login",
     userData,
   )
@@ -31,7 +31,7 @@ export const uploadAvatar = async (avatarUri: string) => {
     name: "avatar.jpg",
   } as unknown as Blob)
 
-  const { data } = await marketplaceApiClient.post<UploadAvatarResponse>(
+  const { data } = await marketPlaceApiClient.post<UploadAvatarResponse>(
     "/user/avatar",
     formData,
   )

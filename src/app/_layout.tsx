@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Stack } from "expo-router"
 import ToastManager from "toastify-react-native"
 import { AppModal } from "@/shared/components/AppModal"
+
 import "../styles/global.css"
 
 const queryClient = new QueryClient()
