@@ -8,6 +8,7 @@ export const useHomeViewModel = () => {
     isFetchingNextPage,
     isLoading,
     refetch,
+    isRefetching,
   } = useProductInfiniteQuery()
 
   const handleLoadMore = () => {
@@ -32,5 +33,6 @@ export const useHomeViewModel = () => {
     isLoading,
     hasNextPage,
     isFetchingNextPage,
+    isRefetching,
   }
 }
