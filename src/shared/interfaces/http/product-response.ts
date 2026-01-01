@@ -1,0 +1,9 @@
+import type { ProductInterface } from "../product"
+
+export interface ProductResponse {
+  page: number
+  perPage: number
+  total: number
+  totalPage: number
+  data: ProductInterface[]
+}

@@ -12,7 +12,7 @@ export const useLoginMutation = () => {
       setSession(response)
     },
     onError: (error) => {
-      console.log(error)
+      console.error(error)
     },
   })
 
