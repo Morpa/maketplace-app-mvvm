@@ -3,13 +3,11 @@ import { useProductInfiniteQuery } from "@/shared/queries/product/use-product-in
 export const useHomeViewModel = () => {
   const {
     products,
-    error,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isLoading,
     refetch,
-    isRefetching,
   } = useProductInfiniteQuery()
 
   const handleLoadMore = () => {
@@ -22,7 +20,17 @@ export const useHomeViewModel = () => {
     await refetch()
   }
 
-  console.log(JSON.stringify(products, null, 2))
+  const handleEndReached = () => {
+    handleLoadMore()
+  }
 
-  return { handleLoadMore, handleRefresh, products, error, isRefetching }
+  return {
+    handleLoadMore,
+    handleRefresh,
+    products,
+    handleEndReached,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+  }
 }

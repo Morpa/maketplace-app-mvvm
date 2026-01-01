@@ -1,7 +1,7 @@
 import type { FC } from "react"
 import { FlatList } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import type { ProductInterface } from "@/shared/interfaces/product"
+import { Footer } from "./components/Footer"
 import { HomeHeader } from "./components/Header"
 import { ProductCard } from "./components/ProductCard"
 import { SearchInput } from "./components/SearchInput"
@@ -9,6 +9,10 @@ import type { useHomeViewModel } from "./useHome.viewModel"
 
 export const HomveView: FC<ReturnType<typeof useHomeViewModel>> = ({
   products,
+  handleEndReached,
+  isLoading,
+  hasNextPage,
+  isFetchingNextPage,
 }) => {
   return (
     <SafeAreaView edges={["top"]} className="flex-1">
@@ -17,6 +21,12 @@ export const HomveView: FC<ReturnType<typeof useHomeViewModel>> = ({
         renderItem={({ item }) => <ProductCard product={item} />}
         keyExtractor={({ id }) => `product-list-item-${id}`}
         numColumns={2}
+        ListFooterComponent={
+          <Footer
+            isLoading={hasNextPage && Boolean(isLoading || isFetchingNextPage)}
+          />
+        }
+        onEndReached={handleEndReached}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         ListHeaderComponent={() => (
           <>

@@ -14,24 +14,32 @@ export const useProductInfiniteQuery = () => {
     isRefetching,
   } = useInfiniteQuery({
     queryFn: async ({ pageParam = 1 }) => {
-      const response = await getProducts({
-        pagination: { page: pageParam, perPage: 10 },
-      })
+      try {
+        const response = await getProducts({
+          pagination: {
+            page: pageParam,
+            perPage: 10,
+          },
+        })
 
-      return response
+        return response
+      } catch (error) {
+        throw error
+      }
     },
     getNextPageParam: (lastPage) => {
-      return lastPage.page < lastPage.totalPage ? lastPage.page + 1 : undefined
+      return lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined
     },
     initialPageParam: 1,
     queryKey: ["products"],
+    staleTime: 1000 * 60 * 1, // 1 minuto
   })
 
   const products = data?.pages
     .flatMap((page) => page.data)
     .map((product) => ({
       ...product,
-      photo: buildImageUrl(product.photo),
+      imageUrl: buildImageUrl(product.photo),
     }))
 
   return {

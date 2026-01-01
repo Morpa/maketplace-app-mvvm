@@ -4,6 +4,6 @@ export interface ProductResponse {
   page: number
   perPage: number
   total: number
-  totalPage: number
+  totalPages: number
   data: ProductInterface[]
 }
