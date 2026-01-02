@@ -3,9 +3,8 @@ import { FlatList, RefreshControl } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { colors } from "@/styles/colors"
 import { Footer } from "./components/Footer"
-import { HomeHeader } from "./components/Header"
 import { ProductCard } from "./components/ProductCard"
-import { SearchInput } from "./components/SearchInput"
+import { RenderHeader } from "./components/RenderHeader"
 import type { useHomeViewModel } from "./useHome.viewModel"
 
 export const HomveView: FC<ReturnType<typeof useHomeViewModel>> = ({
@@ -16,6 +15,8 @@ export const HomveView: FC<ReturnType<typeof useHomeViewModel>> = ({
   isFetchingNextPage,
   handleRefresh,
   isRefetching,
+  setSearchInputText,
+  searchInputText,
 }) => {
   return (
     <SafeAreaView edges={["top"]} className="flex-1">
@@ -31,12 +32,12 @@ export const HomveView: FC<ReturnType<typeof useHomeViewModel>> = ({
         }
         onEndReached={handleEndReached}
         columnWrapperStyle={{ justifyContent: "space-between" }}
-        ListHeaderComponent={() => (
-          <>
-            <HomeHeader />
-            <SearchInput />
-          </>
-        )}
+        ListHeaderComponent={
+          <RenderHeader
+            searchInputText={searchInputText}
+            setSearchInputText={setSearchInputText}
+          />
+        }
         contentContainerClassName="px-[16px] pb-[120px]"
         refreshControl={
           <RefreshControl
