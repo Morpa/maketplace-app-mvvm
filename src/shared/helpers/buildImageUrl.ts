@@ -1,7 +1,7 @@
 import Constants from "expo-constants"
 import { Platform } from "react-native"
 
-export const buildImageUrl = (originalUrl: string) => {
+export const BuildImageUrl = (originalUrl: string) => {
   if (Constants.expoConfig?.extra?.isProduction) {
     return originalUrl
   }

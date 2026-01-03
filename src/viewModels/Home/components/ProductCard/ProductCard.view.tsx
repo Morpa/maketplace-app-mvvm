@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons"
+import { router } from "expo-router"
 import type { FC } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import { AppPriceText } from "@/shared/components/AppPriceText"
@@ -9,7 +10,10 @@ export const ProductCardView: FC<
   ReturnType<typeof useProductCardViewModel>
 > = ({ product, displayName, formatRating }) => {
   return (
-    <TouchableOpacity className="w-[48%] my-1 rounded-xl shadow-sm overflow-hidden h-[157px] p-[4px] bg-white mb-2">
+    <TouchableOpacity
+      onPress={() => router.push(`/product/${product.id}`)}
+      className="w-[48%] my-1 rounded-xl shadow-sm overflow-hidden h-[157px] p-[4px] bg-white mb-2"
+    >
       <View>
         <Image
           source={{ uri: product.photo }}

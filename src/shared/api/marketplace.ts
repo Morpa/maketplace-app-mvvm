@@ -76,9 +76,12 @@ export class MarketPlaceApiClient {
               throw new Error("Refresh token não encontrado")
             }
 
-            const { data: response } = await axios.post("/auth/refresh", {
-              refreshToken,
-            })
+            const { data: response } = await this.instance.post(
+              "/auth/refresh",
+              {
+                refreshToken,
+              },
+            )
 
             const currentUserData = JSON.parse(userData)
 
@@ -92,7 +95,7 @@ export class MarketPlaceApiClient {
 
             originalRequest.headers.Authorization = `Bearer ${response.token}`
 
-            return axios(originalRequest)
+            return this.instance(originalRequest)
           } catch {
             this.handleUnauthorized()
             return Promise.reject(
