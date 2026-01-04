@@ -22,6 +22,7 @@ export const ProductView: FC<ReturnType<typeof useProductViewModel>> = ({
   isRefetching,
   isFetchingNextPage,
   handleAddToCart,
+  handleOpenReview,
 }) => {
   if (error || getCommentsError) return <ProductError />
 
@@ -33,7 +34,12 @@ export const ProductView: FC<ReturnType<typeof useProductViewModel>> = ({
         className="px-6"
         data={comments}
         renderItem={({ item }) => <CommentItem comment={item} />}
-        ListHeaderComponent={() => <Header productDetails={productDetails} />}
+        ListHeaderComponent={() => (
+          <Header
+            handleOpenReview={handleOpenReview}
+            productDetails={productDetails}
+          />
+        )}
         onEndReached={handleEndReached}
         onRefresh={handleRefetch}
         refreshing={isRefetching}

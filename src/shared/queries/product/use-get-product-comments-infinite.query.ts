@@ -27,9 +27,11 @@ export const useGetProductCommentsInfiniteQuery = (productId: number) => {
         ...comment,
         user: {
           ...comment.user,
-          avatar: BuildImageUrl(comment.user.avatar?.url ?? ""),
+          avatar: {
+            url: BuildImageUrl(comment.user.avatar?.url ?? "") ?? "",
+          },
         },
-      })) as unknown as ProductComment[]) ?? []
+      })) as ProductComment[]) ?? []
 
   return {
     ...query,
