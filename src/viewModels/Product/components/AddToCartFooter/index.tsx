@@ -6,14 +6,22 @@ import type { ProductInterface } from "@/shared/interfaces/product"
 
 interface AddToCartFooterParams {
   product: ProductInterface
+  handleAddToCart: () => void
 }
 
-export const AddToCartFooter: FC<AddToCartFooterParams> = ({ product }) => {
+export const AddToCartFooter: FC<AddToCartFooterParams> = ({
+  product,
+  handleAddToCart,
+}) => {
   return (
     <View className="fixed justify-between bg-white bottom-0 left-0 right-0 p-7 h-[126px] flex-row items-center">
       <AppPriceText value={Number(product.value)} />
 
-      <AppButton leftIcon="cart" className="w-[120px] h-[40px]">
+      <AppButton
+        onPress={handleAddToCart}
+        leftIcon="cart"
+        className="w-[120px] h-[40px]"
+      >
         Adicionar
       </AppButton>
     </View>

@@ -21,6 +21,7 @@ export const ProductView: FC<ReturnType<typeof useProductViewModel>> = ({
   comments,
   isRefetching,
   isFetchingNextPage,
+  handleAddToCart,
 }) => {
   if (error || getCommentsError) return <ProductError />
 
@@ -40,7 +41,10 @@ export const ProductView: FC<ReturnType<typeof useProductViewModel>> = ({
         ListEmptyComponent={<EmptyList isLoadingComments={getCommetsLoading} />}
         contentContainerClassName="pb-6"
       />
-      <AddToCartFooter product={productDetails} />
+      <AddToCartFooter
+        handleAddToCart={handleAddToCart}
+        product={productDetails}
+      />
     </SafeAreaView>
   )
 }
