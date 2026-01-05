@@ -4,6 +4,10 @@ import {
   SelectionModal,
   type SelectionModalProps,
 } from "../components/Modals/SelectionModal"
+import {
+  SuccessModal,
+  type SuccessModalParams,
+} from "../components/Modals/SuccessModal"
 import { useModalStore } from "../store/modal-store"
 
 export type SelectionVariant = "primary" | "secondary" | "danger"
@@ -36,5 +40,19 @@ export const useAppModal = () => {
     )
   }
 
-  return { showSelection }
+  const showSuccess = (config: SuccessModalParams) => {
+    open(
+      createElement(SuccessModal, {
+        ...config,
+        onButtomPress: () => {
+          if (config.onButtomPress) {
+            config.onButtomPress()
+          }
+          close()
+        },
+      }),
+    )
+  }
+
+  return { showSelection, showSuccess }
 }
