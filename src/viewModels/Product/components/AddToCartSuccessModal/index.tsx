@@ -13,7 +13,6 @@ interface AddToCartSuccessModalParams {
 
 export const AddToCartSuccessModal: FC<AddToCartSuccessModalParams> = ({
   productName,
-  onClose,
   onContinueShopping,
   onGoToCart,
 }) => {
@@ -35,9 +34,7 @@ export const AddToCartSuccessModal: FC<AddToCartSuccessModalParams> = ({
       </Text>
 
       <View className="gap-3">
-        <AppButton leftIcon="cart" onPress={onGoToCart}>
-          Ver carrinho
-        </AppButton>
+        <AppButton onPress={onGoToCart}>Ver carrinho</AppButton>
 
         <AppButton variant="outlined" onPress={onContinueShopping}>
           Continuar comprando

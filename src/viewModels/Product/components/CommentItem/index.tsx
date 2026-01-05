@@ -31,21 +31,23 @@ export const CommentItem: FC<CommentItemParams> = ({ comment }) => {
             )}
           </View>
 
-          <View className="flex-row items-center flex-1 ml-2">
+          <View className="flex-row items-center flex-1">
             <Text className="text-base font-medium text-gray-800">
               {comment.user.name}
             </Text>
             {isCurrentUser && (
               <View className="bg-blue-base px-2 py-1 rounded-full ml-2">
-                <Text className="text-white text-xs font-bold">Você</Text>
+                <Text className="text-white text-xs font-bold uppercase">
+                  Você
+                </Text>
               </View>
             )}
           </View>
         </View>
 
-        <View className="flex-row items-end">
-          <Ionicons name="star" size={16} color={colors["purple-base"]} />
-          <Text className="text-sm font-bold text-gray-600 ml-1">
+        <View className="flex-row items-end gap-1">
+          <Ionicons name="star" size={16} color={colors["blue-base"]} />
+          <Text className="text-sm font-bold text-gray-600">
             {comment.user.rating.value} /{" "}
             <Text className="text-[10px] text-gray-600">5</Text>
           </Text>
