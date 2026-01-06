@@ -5,7 +5,7 @@ import { CameraType } from "expo-image-picker"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useImage } from "@/shared/hooks/useImage"
-import { useUserUploadAvatarMutation } from "@/shared/queries/auth/use-upload-avatar.mutation"
+import { useUploadAvatarMutation } from "@/shared/queries/auth/use-upload-avatar.mutation"
 import { type RegisterFormData, registerScheme } from "./register.scheme"
 
 export const useRegisterViewModel = () => {
@@ -36,7 +36,7 @@ export const useRegisterViewModel = () => {
     },
   })
 
-  const uploadAvatarMutation = useUserUploadAvatarMutation()
+  const uploadAvatarMutation = useUploadAvatarMutation()
 
   const userRegisterMutation = useRegisterMutation({
     onSuccess: async () => {
