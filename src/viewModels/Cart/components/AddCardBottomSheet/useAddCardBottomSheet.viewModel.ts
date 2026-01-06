@@ -1,8 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useCreateCreditCardMutation } from "@/shared/queries/credit-cards/use-create-credit-card.mutation"
 import { useBottomSheetStore } from "@/shared/store/bottomsheet-store"
 import { type CreditCardFormData, creditCardSchema } from "./credit-card.schema"
+
+export type FocusedField = "number" | "name" | "expiry" | "cvv"
 
 const formatExpirationDateFormApi = (
   dateString: string,
@@ -31,10 +34,13 @@ const formatExpirationDateFormApi = (
 
 export const useAddCardBottomSheetViewModel = () => {
   const createCreditCardMutation = useCreateCreditCardMutation()
+  const [focusedField, setFocusedField] = useState<FocusedField | null>(null)
+
+  const blurTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const { close: closeBottomSheet } = useBottomSheetStore()
 
-  const { control, handleSubmit, reset, watch, clearErrors, setError } =
+  const { control, handleSubmit, setError, watch } =
     useForm<CreditCardFormData>({
       resolver: yupResolver(creditCardSchema),
       defaultValues: {
@@ -85,5 +91,38 @@ export const useAddCardBottomSheetViewModel = () => {
     return cleaned.replace(/(\d{4})(?=\d)/g, "$1 ").trim()
   }
 
-  return { handleCreateCreditCard, control, expirationDateMask, cardNumberMask }
+  const handleFieldFocus = (field: FocusedField) => {
+    if (blurTimeoutRef.current) {
+      clearTimeout(blurTimeoutRef.current)
+    }
+
+    setFocusedField(field)
+  }
+
+  const handleFieldBlur = () => {
+    blurTimeoutRef.current = setTimeout(() => {
+      setFocusedField(null)
+    }, 50)
+  }
+
+  const isFlipped = focusedField === "cvv"
+
+  const watchedValue = watch()
+
+  return {
+    handleCreateCreditCard,
+    control,
+    expirationDateMask,
+    cardNumberMask,
+    isFlipped,
+    handleFieldFocus,
+    handleFieldBlur,
+    focusedField,
+    cardData: {
+      number: watchedValue.number,
+      name: watchedValue.titularName,
+      expiry: watchedValue.expirationDate,
+      cvv: watchedValue.CVV,
+    },
+  }
 }
